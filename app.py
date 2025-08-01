@@ -3,49 +3,113 @@ from flask import Flask, jsonify, request
 app = Flask(__name__)
 app.config["DEBUG"] = True
 
-# Dummy data (simulates a database)
+# Pre-filled nests
 nests = [
     {
         "id": 1,
-        "location": "Mango Tree, Sector 7",
-        "type": "available",
+        "location": "BreezeTop Treehouse, Sector 9",
+        "type": "resort",
         "capacity": 2,
-        "materials": "twigs, feathers",
+        "materials": "silk threads, lotus petals",
         "occupants": [],
-        "ratings": 4.5,
-        "species_suitable": "sparrow, myna",
-        "special_notes": "Shaded, near water, squirrel risk"
+        "ratings": 4.8,
+        "species_suitable": "peacock, bulbul",
+        "special_notes": "Sunrise view, spa worms included"
     },
     {
         "id": 2,
-        "location": "Coconut Grove, Sector 5",
-        "type": "available",
-        "species_suitable": "parrot, bulbul",
-        "capacity": 3,
-        "materials": "leaves, plastic bits",
-        "ratings": 4.0,
+        "location": "FeatherFalls Canopy Resort",
+        "type": "resort",
+        "capacity": 1,
+        "materials": "cotton, bamboo leaves",
         "occupants": [],
-        "special_notes": "Windy, great view, ant problem"
+        "ratings": 4.9,
+        "species_suitable": "kingfisher, hornbill",
+        "special_notes": "Overlooks lake, mosquito-free zone"
+    },
+    {
+        "id": 3,
+        "location": "Punky Parrot's Pad",
+        "type": "shared",
+        "capacity": 3,
+        "materials": "twigs, candy wrappers",
+        "occupants": ["Punky Parrot"],
+        "ratings": 4.1,
+        "species_suitable": "parrot, sparrow",
+        "special_notes": "Music nights on Tuesdays, free fruit peels"
+    },
+    {
+        "id": 4,
+        "location": "Coozy Coop",
+        "type": "shared",
+        "capacity": 2,
+        "materials": "grass, shoelaces",
+        "occupants": ["Larry the Lark"],
+        "ratings": 3.9,
+        "species_suitable": "lark, myna",
+        "special_notes": "Cozy but loud neighbors, good shade"
+    }
+]
+
+# Suggested build locations
+build_locations = [
+    {
+        "location": "Palm Grove Heights",
+        "materials": "dry leaves, twine, coconut fibers",
+        "climate_rating": 4.7,
+        "predator_risk": "Low",
+        "shade": "High"
+    },
+    {
+        "location": "Banyan Base, Sector 12",
+        "materials": "roots, wool strands, paper bits",
+        "climate_rating": 4.3,
+        "predator_risk": "Medium",
+        "shade": "Medium"
+    },
+    {
+        "location": "Neem Nook",
+        "materials": "bark flakes, silk, cotton",
+        "climate_rating": 4.9,
+        "predator_risk": "Very Low",
+        "shade": "Full"
     }
 ]
 
 @app.route('/')
 def home():
-    return "Welcome to BirdBnB Backend – Where nests find birds!"
+    return "🐦 Welcome to BirdBnB Backend – Where Nests Find Birds!"
 
-# Get all nests
+# Get all nests (optional, for testing)
 @app.route('/nests', methods=['GET'])
 def get_nests():
     return jsonify(nests)
 
-# Build a new nest
+# 🏨 Resort nests
+@app.route('/nests/resorts', methods=['GET'])
+def get_resorts():
+    resort_nests = [nest for nest in nests if nest["type"] == "resort"]
+    return jsonify(resort_nests)
+
+# 🛏️ Shared/co-living nests
+@app.route('/nests/shared', methods=['GET'])
+def get_shared_nests():
+    shared_nests = [nest for nest in nests if nest["type"] == "shared"]
+    return jsonify(shared_nests)
+
+# 🧱 Suggested build locations
+@app.route('/build/locations', methods=['GET'])
+def get_build_locations():
+    return jsonify(build_locations)
+
+# 🏗️ Build a custom nest
 @app.route('/build', methods=['POST'])
 def build_nest():
     data = request.get_json()
     new_nest = {
         "id": len(nests) + 1,
         "location": data["location"],
-        "type": data.get("type", "available"),
+        "type": "custom",
         "capacity": data["capacity"],
         "materials": data["materials"],
         "occupants": [],
@@ -56,7 +120,7 @@ def build_nest():
     nests.append(new_nest)
     return jsonify({"message": "Nest built!", "nest": new_nest})
 
-# Book a nest
+# 📥 Book resort or join shared nest
 @app.route('/book', methods=['POST'])
 def book_nest():
     data = request.get_json()
@@ -64,46 +128,16 @@ def book_nest():
     bird_name = data.get("name", "anonymous bird")
 
     for nest in nests:
-        if nest["location"] == location:
+        if nest["location"].lower() == location.lower():
             if len(nest["occupants"]) < nest["capacity"]:
                 nest["occupants"].append(bird_name)
                 return jsonify({"message": "Nest booked!", "nest": nest})
             else:
-                return jsonify({"error": "Nest is at full capacity"}), 400
+                return jsonify({"message": "Nest is full"}), 403
 
     return jsonify({"error": "Nest not found"}), 404
 
-# Share a nest
-@app.route('/share', methods=['POST'])
-def share_nest():
-    data = request.get_json()
-    location = data.get("location")
-    bird_name = data.get("name", "anonymous bird")
-
-    for nest in nests:
-        if nest["location"] == location:
-            if len(nest["occupants"]) < nest["capacity"]:
-                nest["occupants"].append(bird_name)
-                return jsonify({"message": "Nest shared!", "nest": nest})
-            else:
-                return jsonify({"error": "Nest is at full capacity"}), 400
-
-    return jsonify({"error": "Nest not found"}), 404
-
-# Vacate a nest
-@app.route('/vacate', methods=['POST'])
-def vacate_nest():
-    data = request.get_json()
-    location = data.get("location")
-
-    for nest in nests:
-        if nest["location"] == location and len(nest["occupants"]) > 0:
-            nest["occupants"] = []
-            return jsonify({"message": "Nest vacated!", "nest": nest})
-
-    return jsonify({"error": "No occupied nest found at that location"}), 404
-
-# Rate a nest
+# ⭐ Rate a nest
 @app.route('/rate', methods=['POST'])
 def rate_nest():
     data = request.get_json()
@@ -112,25 +146,26 @@ def rate_nest():
 
     for nest in nests:
         if nest["location"].lower() == location.lower():
-            nest["ratings"] = round((nest["ratings"] + new_rating) / 2, 2)
+            if nest["ratings"] == 0:
+                nest["ratings"] = new_rating
+            else:
+                nest["ratings"] = round((nest["ratings"] + new_rating) / 2, 2)
             return jsonify({"message": "Nest rated!", "new_rating": nest["ratings"]})
     
     return jsonify({"error": "Nest not found"}), 404
 
-# Search nests by species
-@app.route('/search', methods=['GET'])
-def search_nests():
-    species = request.args.get("species", "").lower()
-    matching_nests = []
+# 🕊️ Vacate a nest
+@app.route('/vacate', methods=['POST'])
+def vacate_nest():
+    data = request.get_json()
+    location = data.get('location')
 
     for nest in nests:
-        if species in nest["species_suitable"].lower():
-            matching_nests.append(nest)
+        if nest['location'].lower() == location.lower() and nest['occupants']:
+            nest['occupants'] = []
+            return jsonify({"message": "Nest vacated!", "nest": nest})
 
-    if not matching_nests:
-        return jsonify({"message": "No nests found for that species"}), 404
-
-    return jsonify({"results": matching_nests})
+    return jsonify({"error": "No occupied nest found at that location"}), 404
 
 if __name__ == '__main__':
     app.run(debug=True)
