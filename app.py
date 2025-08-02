@@ -1,8 +1,20 @@
 from flask import Flask, jsonify, request
-
+from flask_cors import CORS
 app = Flask(__name__)
+CORS(app)
 app.config["DEBUG"] = True
 
+@app.route("/api/nests")
+def get_nests():
+    return jsonify([
+        {"name": "Punky Parrot’s Comfy Nest", "type": "Co-Living", "rating": 4.8},
+        {"name": "Luxury Leaf Resort", "type": "Booking", "rating": 4.9}
+    ])
+@app.route('/')
+def home():
+    return "🐦 Welcome to BirdBnB Backend – Where Nests Find Birds!"
+if __name__ == "__main__":
+    app.run(debug=True)
 # Pre-filled nests
 nests = [
     {
@@ -76,9 +88,7 @@ build_locations = [
     }
 ]
 
-@app.route('/')
-def home():
-    return "🐦 Welcome to BirdBnB Backend – Where Nests Find Birds!"
+
 
 # Get all nests (optional, for testing)
 @app.route('/nests', methods=['GET'])
