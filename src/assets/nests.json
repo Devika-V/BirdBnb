@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "name": "Palm Paradise",
+    "species": "Sparrow",
+    "location": "Coconut Tree, Kerala",
+    "rating": 4.5,
+    "image": "https://source.unsplash.com/400x300/?bird,nest"
+  },
+  {
+    "id": 2,
+    "name": "Sky Nest",
+    "species": "Parrot",
+    "location": "Mango Tree, Goa",
+    "rating": 4.8,
+    "image": "https://source.unsplash.com/400x300/?parrot,nest"
+  },
+  {
+    "id": 3,
+    "name": "River View Nest",
+    "species": "Kingfisher",
+    "location": "Backwaters, Alappuzha",
+    "rating": 4.9,
+    "image": "https://source.unsplash.com/400x300/?kingfisher,nest"
+  }
+]

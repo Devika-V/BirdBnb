@@ -1,0 +1,465 @@
+/*
+  BirdBnB Stylesheet Makeover
+  ---------------------------
+  - Font Imports: 'Quicksand' for headings and 'Lato' for body text.
+  - CSS Variables: For a consistent and easily customizable color scheme.
+  - Gradients & Shadows: To add depth and a modern feel.
+  - Refined Components: Enhanced styles for cards, buttons, and the navbar.
+*/
+
+/* 1. FONT IMPORTS & CSS VARIABLES
+------------------------------------ */
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&family=Lato:wght@400;700&display=swap');
+
+:root {
+  --primary-color: #38bdf8; /* A vibrant sky blue */
+  --secondary-color: #fcd34d; /* A sunny, warm yellow/orange */
+  --background-light: #f8fafc; /* A very light, clean gray */
+  --text-dark: #1e293b; /* A soft, dark slate */
+  --text-light: #64748b; /* A lighter gray for descriptions */
+  --white-color: #ffffff;
+  --border-radius: 12px;
+  --shadow-light: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-medium: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -2px rgb(0 0 0 / 0.1);
+}
+
+/* 2. GENERAL & BODY STYLES
+------------------------------------ */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Lato', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  background-color: var(--background-light);
+  color: var(--text-dark);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 700;
+}
+
+.container {
+  padding: 2rem 4rem; /* More horizontal padding */
+}
+
+/* 3. HOME PAGE STYLES
+------------------------------------ */
+.home-page {
+  text-align: center;
+}
+
+/* The hero header with the new gradient background! */
+.home-header {
+  padding: 5rem 2rem;
+  background: linear-gradient(170deg, #a7e6ff 0%, #dff6ff 100%); /* Beautiful sky gradient */
+  color: var(--text-dark);
+}
+
+.hero-logo {
+  width: 150px;
+  margin-bottom: 1rem;
+  /* A subtle animation for the logo */
+  transition: transform 0.3s ease-in-out;
+}
+
+.hero-logo:hover {
+  transform: scale(1.1) rotate(-5deg);
+}
+
+.title {
+  font-size: 4rem;
+  margin: 1rem 0;
+  color: #075985; /* A deeper blue for contrast */
+  font-weight: 700;
+}
+
+.tagline {
+  font-size: 1.5rem;
+  color: var(--text-dark);
+  margin: 0;
+}
+
+.home-features {
+  padding: 4rem 2rem;
+  background-color: var(--white-color);
+}
+
+.home-features .card-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.feature-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.feature-link .card {
+  text-align: left;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.feature-link .card .card-content {
+  flex-grow: 1;
+}
+
+
+/* 4. NAVBAR STYLES
+------------------------------------ */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--white-color);
+  padding: 1rem 2rem;
+  color: var(--text-dark);
+  box-shadow: var(--shadow-light);
+  position: sticky; /* Make it stick to the top on scroll */
+  top: 0;
+  z-index: 1000;
+  backdrop-filter: blur(8px); /* Frosted glass effect for modern browsers */
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.navbar-logo {
+  display: flex;
+  align-items: center;
+  font-family: 'Quicksand', sans-serif;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  text-decoration: none;
+}
+
+.navbar-logo img {
+  width: 45px;
+  margin-right: 12px;
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.navbar-logo:hover img {
+  transform: rotate(15deg);
+}
+
+.navbar-links {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-links a {
+  color: var(--text-light);
+  text-decoration: none;
+  font-size: 1.1rem;
+  font-weight: 700;
+  font-family: 'Quicksand', sans-serif;
+  position: relative;
+  transition: color 0.2s ease-in-out;
+}
+
+/* Underline effect on hover */
+.navbar-links a::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 2px;
+  bottom: -4px;
+  left: 0;
+  background-color: var(--primary-color);
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+.navbar-links a:hover {
+  color: var(--text-dark);
+}
+
+.navbar-links a:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+
+/* 5. CARD STYLES
+------------------------------------ */
+.card-container {
+  display: grid;
+  padding: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2.5rem;
+}
+
+.card {
+  background: var(--white-color);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-light);
+  overflow: hidden;
+  padding: 20px;
+  background-color: #e1d6d6;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid #e2e8f0;
+}
+
+.card:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: var(--shadow-medium);
+}
+
+.card-image {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+}
+
+.card-content {
+  padding: 1.5rem;
+}
+
+.card-title {
+  font-size: 1.5rem;
+  margin: 0 0 0.75rem 0;
+  color: var(--text-dark);
+}
+
+.card-description {
+  font-size: 1rem;
+  color: var(--text-light);
+  line-height: 1.6;
+}
+
+
+/* 6. BUTTON STYLES
+------------------------------------ */
+/* A general button class for reusability */
+.btn {
+  background-color: var(--secondary-color);
+  color: var(--text-dark);
+  border: none;
+  padding: 12px 24px;
+  border-radius: 50px; /* Fully rounded "pill" shape */
+  cursor: pointer;
+  margin-top: 1rem;
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: var(--shadow-light);
+}
+
+.btn:hover {
+  background-color: #fbbd23; /* Slightly darker shade on hover */
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-medium);
+}
+
+.btn:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-light);
+}
+
+/* Applying the style to our existing buttons */
+.btn-book, .btn-connect {
+  composes: btn;
+}
+
+/* A primary-colored button for variety */
+.btn-primary {
+  composes: btn;
+  background-color: var(--primary-color);
+  color: var(--white-color);
+}
+
+.btn-primary:hover {
+  background-color: #0ea5e9;
+}
+.booking-page {
+  padding: 2rem;
+  color: #4a2828;
+}
+
+/* 7. CONNECT PAGE STYLES
+------------------------------------ */
+.connect-page-container {
+  max-width: 1000px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: var(--white-color);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-medium);
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 2rem;
+  font-weight: 700;
+  color: var(--text-light);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.back-link:hover {
+  color: var(--primary-color);
+}
+
+.connect-layout {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr; /* Two columns */
+  gap: 3rem;
+  align-items: center;
+}
+
+/* Profile styles (left side) */
+.connect-profile {
+  text-align: center;
+  color: var(--text-dark);
+}
+
+.connect-profile-img {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%; /* Make it a circle */
+  object-fit: cover;
+  border: 5px solid var(--primary-color);
+  box-shadow: var(--shadow-light);
+  margin-bottom: 1.5rem;
+}
+
+.connect-profile h3 {
+  color: var(--text-light);
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+.connect-profile h2 {
+  font-size: 2.2rem;
+  margin: 0.25rem 0 0 0;
+  color: var(--text-dark);
+}
+
+/* Form styles (right side) */
+.connect-form h3 {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid var(--primary-color);
+  padding-bottom: 0.5rem;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--text-light);
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-family: 'Lato', sans-serif;
+  font-size: 1rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.3);
+}
+
+/* Responsive layout for smaller screens */
+@media (max-width: 768px) {
+  .connect-layout {
+    grid-template-columns: 1fr; /* Stack columns on top of each other */
+  }
+}
+
+/* 8. BOOKING PROCESS PAGE STYLES
+------------------------------------ */
+.booking-process-container {
+  max-width: 1000px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: var(--white-color);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-medium);
+}
+
+.booking-layout {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 3rem;
+  align-items: start; /* Align to the top */
+}
+
+/* Info styles (left side) */
+.booking-info {
+  text-align: left;
+  color: var(--text-dark);
+  position: sticky; /* Make the info card stick on scroll */
+  top: 120px; /* Adjust based on navbar height */
+}
+
+.booking-info-img {
+  width: 100%;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-light);
+  margin: 1.5rem 0;
+}
+
+.booking-info h3 {
+  color: var(--text-light);
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+.booking-info h2 {
+  font-size: 2.2rem;
+  margin: 0.25rem 0 0 0;
+  color: var(--text-dark);
+  line-height: 1.2;
+}
+
+.booking-info p {
+  color: var(--text-light);
+  line-height: 1.6;
+}
+
+/* Form styles (right side) */
+.booking-form {
+  border-left: 1px solid #e2e8f0;
+  padding-left: 3rem;
+}
+
+/* Responsive layout for smaller screens */
+@media (max-width: 768px) {
+  .booking-layout {
+    grid-template-columns: 1fr; /* Stack on mobile */
+  }
+  .booking-info {
+    position: static; /* Unstick the card */
+    text-align: center;
+  }
+  .booking-form {
+    border-left: none;
+    padding-left: 0;
+    margin-top: 2rem;
+    border-top: 1px solid #e2e8f0;
+    padding-top: 2rem;
+  }
+}
